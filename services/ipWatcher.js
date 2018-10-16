@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const getIP = promisify(require('external-ip')());
 const Mailer = require('./Mailer');
 const emailTemplate = require('../emailTemplates/generic');
+const logger = require('./logger');
 
 const ipFileLocation = './ip.txt';
 const email = process.env.EMAIL;
@@ -17,8 +18,9 @@ async function hasIpChanged() {
     const ip = await getIP();
 
     if(prevIp !== ip) {
-        console.log('different ip send email to ' + email);
-        sendMail(ip);
+        logger.info(`Old ip (${prevIp}) has been changed to ${ip}. Sending email...`);
+        await sendMail(ip);
+        logger.info(`Email sent to ${email}.`);
     }
 }
 

@@ -1,0 +1,4 @@
+{
+    "logfile": "logs/logfile.log",
+    "pollTimingInMinutes": 15
+}
